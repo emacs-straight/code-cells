@@ -61,6 +61,8 @@ that these commands do not require the minor mode to be active.
 - =C-c % e=: =code-cells-eval=
 - =C-c % b=: =code-cells-backward-cell=
 - =C-c % f=: =code-cells-forward-cell=
+- =C-c % B=: =code-cells-move-cell-up=
+- =C-c % F=: =code-cells-move-cell-down=
 - =C-c % ;=: =code-cells-comment-or-uncomment=
 - =C-c % @=: =code-cells-mark-cell=
 
@@ -101,6 +103,18 @@ follows:
       (define-key map "p" (code-cells-speed-key 'code-cells-backward-cell))
       (define-key map "e" (code-cells-speed-key 'code-cells-eval))
       (define-key map (kbd "TAB") (code-cells-speed-key 'outline-cycle))))
+#+end_src
+
+For Evil users, the following can be used:
+
+#+begin_src emacs-lisp
+  (with-eval-after-load 'code-cells
+    (let ((map code-cells-mode-map))
+      (define-key map [remap evil-search-next] (code-cells-speed-key 'code-cells-forward-cell)) ;; n
+      (define-key map [remap evil-paste-after] (code-cells-speed-key 'code-cells-backward-cell)) ;; p
+      (define-key map [remap evil-backward-word-begin] (code-cells-speed-key 'code-cells-eval-above)) ;; b
+      (define-key map [remap evil-forward-word-end] (code-cells-speed-key 'code-cells-eval)) ;; e
+      (define-key map [remap evil-jump-forward] (code-cells-speed-key 'outline-cycle)))) ;; TAB
 #+end_src
 
 ** Handling Jupyter notebook files
